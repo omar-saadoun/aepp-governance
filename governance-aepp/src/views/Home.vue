@@ -203,6 +203,7 @@
 <style scoped>
   .bg-gray-ae {
     background-color: #FE8C00;
+    background-image: '../assets/logo_horizontal_white.png'
   }
 
   .tab {
@@ -220,7 +221,7 @@
 
   .tab.active::after {
     content: "";
-    border: 8px solid #333;
+    border: 8px solid rgb(136, 72, 0);
     width: 8px;
     height: 8px;
     transform: rotate(45deg);
