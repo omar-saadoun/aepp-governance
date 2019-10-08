@@ -7,7 +7,7 @@
       <AccountHeader class="mb-4" :address="accountAddress" :poll-address="pollAddress"
                      v-if="accountAddress && !isClosed" :startOpen="false" :canOpen="true"></AccountHeader>
       <div v-if="isClosed" class="text-center">
-        <div class="text-gray-500 mt-4">POLL CLOSED</div>
+        <div class="text-gray-500 mt-4">ENCUESTA FINALIZADA</div>
       </div>
       <div class="flex justify-between mx-4 mt-4 mb-2">
         <div class="max-w-75">
@@ -25,7 +25,7 @@
         <a :href="pollState.metadata.link" @click.stop.prevent="openLink" class="text-blue-500 opacity-75">{{pollState.metadata.link}}</a>
         <transition name="fade">
           <div class="absolute inset-0 bg-gray-500 text-white p-2 rounded" v-if="showCopyNotice">
-            Copied link to clipboard
+            Link copiado al porta papeles
           </div>
         </transition>
       </div>
@@ -57,16 +57,16 @@
           Stake: {{pollVotesState.totalStake | toAE(0)}} ({{pollVotesState.percentOfTotalSupply | formatPercent(2)}})
         </div>
         <div v-if="typeof pollState.close_height !== 'number'" class="inline-block">
-          - Closes never
+          - Sin fin
         </div>
         <div v-else-if="!isClosed">
-          Closes in ~{{timeDifference | timeDifferenceToString}} (Block {{pollState.close_height}})
+          Finaliza en ~{{timeDifference | timeDifferenceToString}} (Block {{pollState.close_height}})
         </div>
         <div v-else-if="isClosed && closeBlock">
-          Closed on {{closeBlock.keyBlock.time | timeStampToString}} (Block {{pollState.close_height}})
+          Finalizada en {{closeBlock.keyBlock.time | timeStampToString}} (Block {{pollState.close_height}})
         </div>
         <div v-else-if="isClosed && !closeBlock">
-          Closed at block {{pollState.close_height}}
+          Finaliza en el bloque {{pollState.close_height}}
         </div>
       </div>
 
@@ -74,15 +74,15 @@
 
       <div v-for="[id, title] in pollState.vote_options" v-if="pollState.vote_options">
         <HintBubble v-if="delegateeVote && delegateeVote.option === id">
-          Your <span v-if="!Object.keys(delegateeVote.delegationTree).includes(accountAddress)">sub-</span>delegatee
+          Su <span v-if="!Object.keys(delegateeVote.delegationTree).includes(accountAddress)">sub-</span>delegado
           <a class="font-mono text-primary text-xs" href="#"
              @click.stop.prevent="$router.push(`/account/${delegateeVote.account}`)">
             {{delegateeVote.account.substr(0,12)}} •••
           </a>
-          <span v-if="!isClosed">has</span>
-          <span v-if="isClosed">had</span>
-          voted with your stake for "{{title}}"<span v-if="isClosed"> at the time the poll closed</span>. <span
-          v-if="!isClosed">Unhappy? You can overwrite their choice by placing your own vote.</span>
+          <span v-if="!isClosed">ha</span>
+          <span v-if="isClosed">ha</span>
+          votado con su poder por "{{title}}"<span v-if="isClosed"> al momento del cierre</span>. <span
+          v-if="!isClosed">¿En desacuerdo? Puede anular su voto votando usted mismo.</span>
         </HintBubble>
         <div class="m-4 ae-card cursor-pointer" @click="showVoters(id)">
           <div class="flex justify-between items-center w-full py-4 px-3">
@@ -108,15 +108,15 @@
           <div class="text-gray-500 text-sm my-1 mx-2" v-if="pollVotesState">
             {{pollVotesState.stakesForOption[id].percentageOfTotal | formatPercent(2)}}
             ({{pollVotesState.stakesForOption[id].optionStake | toAE}}) -
-            {{pollVotesState.stakesForOption[id].votes.length}} Votes -
-            {{pollVotesState.stakesForOption[id].delegatorsCount}} Delegators
+            {{pollVotesState.stakesForOption[id].votes.length}} Votos -
+            {{pollVotesState.stakesForOption[id].delegatorsCount}} Delegados
           </div>
           <AccountTreeLine :balance="voter.stake" :account="voter.account" :delegators="voter.delegators"
                            v-for="voter in votersForOption.voters" :no-sum="true"
                            :key="voter.account"/>
         </div>
       </div>
-      <BottomButtons :cta-text="voteOption !== null && !isClosed ?  'Revoke Vote' : null "
+      <BottomButtons :cta-text="voteOption !== null && !isClosed ?  'Revocar Voto' : null "
                      @cta="revokeVote"></BottomButtons>
     </div>
     <CriticalErrorOverlay :error="error" @continue="continueFunction"></CriticalErrorOverlay>
@@ -195,7 +195,7 @@
           await this.pollContract.methods.vote(this.voteOption);
         } catch (e) {
           console.error(e);
-          this.error = 'Could not process your vote. Please try again.';
+          this.error = 'No se pudo procesar su voto. Pruebe nuevamente.';
         }
 
         try {
@@ -203,7 +203,7 @@
         } catch (e) {
           console.error(e);
           this.showLoading = false;
-          this.error = 'Could not process your vote. Please try again.';
+          this.error = 'No se pudo procesar su voto. Pruebee nuevamente.';
         }
       },
       async revokeVote() {
@@ -214,7 +214,7 @@
         } catch (e) {
           console.error(e);
           this.showLoading = false;
-          this.error = 'Could not revoke your vote. Please try again.';
+          this.error = 'No se pudo revocar su voto. Pruebe nuevamente.';
         }
       },
       showVoters(id) {

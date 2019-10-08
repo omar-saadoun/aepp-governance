@@ -4,10 +4,10 @@
       <BiggerLoader></BiggerLoader>
     </div>
     <BlackHeader>
-      Create Poll
+      Crear Encuesta
     </BlackHeader>
     <GrayText>
-      Use the form below to create a new governance poll.
+      Utilice el formulario debajo para crear una encuesta.
     </GrayText>
     <div v-if="Object.values(this.errors).some(val => !!val)" class="bg-ae-error mx-4 p-2 my-2">
       <div class="flex mb-1">
@@ -15,8 +15,7 @@
           !
         </div>
         <div>
-          <span class="font-bold">Hey there is a problem!</span> Check the
-          red fields below and try again.
+          <span class="font-bold">Ocurrió un error!</span> Revise los campos marcados en rojo.
         </div>
       </div>
       <ul class="block ml-6 pl-1">
@@ -35,8 +34,8 @@
     </div>
     <div class="mt-2">
       <HintBubble v-if="showForumHint">
-        For easier discussions on your proposal we suggest you create a thread in the æternity forum and link it here.
-        (<a href="https://forum.aeternity.com" target="_blank">https://forum.aeternity.com</a>)
+        Para facilitar la discusión de la propuesta se sugiere crear un hilo en el foro del Partido Digital y linkearlo aqui.
+        (<a href="https://foro.partidodigital.org.uy" target="_blank">https://foro.partidodigital.org.uy</a>)
       </HintBubble>
     </div>
     <div class="pb-2 px-4">
@@ -45,9 +44,9 @@
     </div>
     <div class="py-2 px-4">
       <AeButtonGroup>
-        <ae-button face="round" @click="is_listed = true" :fill="is_listed ? 'primary' : 'neutral'">Publicly Listed
+        <ae-button face="round" @click="is_listed = true" :fill="is_listed ? 'primary' : 'neutral'">Pública
         </ae-button>
-        <ae-button face="round" @click="is_listed = false" :fill="is_listed ? 'neutral' : 'primary'">Not Listed
+        <ae-button face="round" @click="is_listed = false" :fill="is_listed ? 'neutral' : 'primary'">Privada
         </ae-button>
       </AeButtonGroup>
     </div>
@@ -77,13 +76,13 @@
       </div>
       <div class="text-gray-500 text-sm p-2">
         <span v-if="closeHeight && closeHeight > height">
-          To create a never closing poll, set close height to 0.
+          Para crear una encuesta sin vencimiento configurar el cierro en el bloque 0.
         </span>
         <span v-if="closeHeight && closeHeight < height && closeHeight !== '0'">
-          Current height is {{height}} and closing height {{closeHeight}} lies in the past.
+          El bloque actual es {{height}} y el de cierre {{closeHeight}} corresponde al pasado.
         </span>
         <span v-if="closeHeight === '0'">
-          This poll will never close.
+          Esta encuesta nunca finaliza.
         </span>
       </div>
     </div>
@@ -185,22 +184,22 @@
 
         // VERIFY INPUT
         this.createMetadata.title = this.createMetadata.title.trim();
-        if (this.createMetadata.title.length === 0) this.errors.titleError = 'Please provide a title.';
-        if (this.createMetadata.title.length > 50) this.errors.titleError = 'Your title is too long (50 chars max).';
+        if (this.createMetadata.title.length === 0) this.errors.titleError = 'Ingrese un título.';
+        if (this.createMetadata.title.length > 50) this.errors.titleError = 'El título es demasiado largo (50 caracteres).';
 
         this.createMetadata.description = this.createMetadata.description.trim();
-        if (this.createMetadata.description.length === 0) this.errors.descriptionError = 'Please provide a description.';
+        if (this.createMetadata.description.length === 0) this.errors.descriptionError = 'Ingrese una descripción.';
 
         this.createMetadata.link = this.createMetadata.link.trim();
-        if (this.createMetadata.link.indexOf('http') === -1) this.errors.linkError = 'Your link must include http:// or https://.';
-        if (this.createMetadata.link.length === 0) this.errors.linkError = 'Please provide a link.';
+        if (this.createMetadata.link.indexOf('http') === -1) this.errors.linkError = 'El link debe incluir http:// o https://.';
+        if (this.createMetadata.link.length === 0) this.errors.linkError = 'Ingrese un link.';
 
         let options = this.options.filter(option => !!(option.text.trim()));
-        if (options.length < 2) this.errors.optionError = 'Please provide at least two options.';
+        if (options.length < 2) this.errors.optionError = 'Ingrese al menos dos opciones';
 
-        if (this.closeHeight.length === 0) this.errors.closeHeightError = 'Please provide a closing height.';
-        else if (isNaN(parseInt(this.closeHeight))) this.errors.closeHeightError = 'The closing height is not a whole number.';
-        else if (parseInt(this.closeHeight) <= this.height && this.closeHeight !== "0") this.errors.closeHeightError = 'The closing height lies in the past.';
+        if (this.closeHeight.length === 0) this.errors.closeHeightError = 'Ingrese un bloque de cierre.';
+        else if (isNaN(parseInt(this.closeHeight))) this.errors.closeHeightError = 'Debe ingresar un entero.';
+        else if (parseInt(this.closeHeight) <= this.height && this.closeHeight !== "0") this.errors.closeHeightError = 'El bloque ingresado ya pasó.';
 
         if (Object.values(this.errors).some(val => !!val)) return document.querySelector('.wrapper').scrollTo(0, 0);
 
@@ -227,7 +226,7 @@
             this.$router.push(`/poll/${addPoll.decodedResult}`);
           } catch (e) {
             this.showLoading = false;
-            this.criticalError = 'Could not create your poll. Please try again.';
+            this.criticalError = 'Error al crear la encuesta. Pruebe nuevamente';
             if (typeof e === 'string')
               this.criticalError += ` Error: ${e}`;
             console.error(e);

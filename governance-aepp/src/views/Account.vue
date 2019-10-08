@@ -140,11 +140,11 @@
     methods: {
       handleSearch(searchText) {
         this.searchError = '';
-        if (!searchText) return this.searchError = 'Please enter an address';
+        if (!searchText) return this.searchError = 'Por favor ingrese una dirección';
         if (Crypto.isAddressValid(searchText)) {
           this.$router.push(`/account/${searchText}`)
         } else {
-          this.searchError = 'The address is not valid'
+          this.searchError = 'La dirección no es válida'
         }
       },
       switchTab(newTab) {
@@ -179,7 +179,7 @@
           } catch (e) {
             console.error(e);
             this.showLoading = false;
-            this.error = 'Could not create your delegation. Please try again.';
+            this.error = 'No se pudo crear la delegación. Pruebe nuevamente.';
 
           }
         }
@@ -193,7 +193,7 @@
         } catch (e) {
           console.error(e);
           this.showLoading = false;
-          this.error = 'Could not revoke your delegation. Please try again.'
+          this.error = 'No se pudo revocar la delegación. Pruebe nuevamente.'
         }
 
       },

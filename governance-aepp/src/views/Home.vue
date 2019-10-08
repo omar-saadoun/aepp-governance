@@ -165,7 +165,7 @@
       }
       if (!aeternity.isTestnet()) {
         // remove this for mainnet usage
-        this.error = 'This Aepp is in testing mode, choose Testnet to use it, you will automatically be funded Testnet-tokens. In Base-Aepp you can find this in Settings -> Network.';
+        this.error = 'Esta aplicación está en modo de prueba, elija Testnet para utilizarla, se proveeran tokens de forma automática . En la Base-Aepp se puede configurar en Settings -> Network.';
       }
 
       this.address = aeternity.address;

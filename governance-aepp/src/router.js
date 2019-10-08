@@ -9,29 +9,29 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    meta: {title: 'Home'}
+    meta: {title: 'Democracia líquida'}
   }, {
     path: '/create',
     name: 'create',
     component: Create,
-    meta: {title: 'Create'}
+    meta: {title: 'Crear'}
   }, {
     path: '/account/:account',
     name: 'account',
     component: Account,
-    meta: {title: 'Account'}
+    meta: {title: 'Cuenta'}
   }, {
     path: '/poll/:id',
     name: 'poll',
     component: Poll,
-    meta: {title: 'Poll'}
+    meta: {title: 'Consulta'}
   }
 ]
 
 const router = new Router({mode: 'hash', routes: routes})
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} - Governance Aepp`
+  document.title = `${to.meta.title} - Partido Digital`
   next()
 })
 

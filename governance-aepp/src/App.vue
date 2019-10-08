@@ -5,8 +5,8 @@
         <router-view v-if="clientAvailable" :resetView="resetView"></router-view>
         <div class="inset-0 flex justify-center flex-col items-center" v-else>
           <BiggerLoader></BiggerLoader>
-          <h2 class="mt-2 font-bold">Looking for a wallet. Check for popups.</h2>
-          <ae-button v-show="showSkip" class="mt-4" face="round" fill="neutral" @click="abortWalletCheck">Continue without wallet</ae-button>
+          <h2 class="mt-2 font-bold">Buscando la billeteera. Revise las ventanas emergentes.</h2>
+          <ae-button v-show="showSkip" class="mt-4" face="round" fill="neutral" @click="abortWalletCheck">Continuar sin billetera (solo lectura)</ae-button>
         </div>
         <div class="mb-24">
           <!-- BOTTOM SPACER -->

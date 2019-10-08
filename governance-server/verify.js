@@ -22,7 +22,7 @@ const verify = async () => {
     const verifyConstants = {
         nodeUrl: "http://localhost:3013/",
         compilerUrl: "http://localhost:3080",
-        registryContract: "ct_2uwZSiKc9vz1Rcg4Pr6FGnMY4R2rEpadWJNG64iAykJpGC9qGe"
+        registryContract: "ct_2Gszmrx2yXivgLy6znktwp2uZHzFE8MSGLtWDyPrdZXss8KSuJ"
     };
 
     const aeternity = new Aeternity(verifyConstants);

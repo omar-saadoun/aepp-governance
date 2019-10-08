@@ -35,7 +35,7 @@ export const wallet = {
     })
     const detector = await Detector({ connection: scannerConnection })
     const handleWallets = async function ({ wallets, newWallet }) {
-      if (confirm(`Do you want to connect to wallet ${newWallet.name}`)) {
+      if (confirm(`Desea conectar a la billetera ${newWallet.name}`)) {
         detector.stopScan()
         await this.client.connectToWallet(await newWallet.getConnection())
         await this.client.subscribeAddress('subscribe', 'current')
