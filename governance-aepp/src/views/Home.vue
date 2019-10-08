@@ -7,7 +7,7 @@
       <BlackHeader :show-number-input="true" @submit="showPoll" @input="handleIdInput">
         Encuestas
       </BlackHeader>
-      <div class="flex bg-gray-ae text-gray-200">
+      <div class="flex bg-gray-ae-no-image text-gray-200">
         <div v-if="pollOrdering" :class="{active: activeTab === 'hot'}" @click="switchTab('hot')" class="tab">
           <span>ACTIVAS</span>
         </div>
@@ -201,9 +201,13 @@
 </script>
 
 <style scoped>
+ .bg-gray-ae-no-image {
+    background-color: #FE8C00;
+   
+  }
   .bg-gray-ae {
     background-color: #FE8C00;
-    background-image: url(../assets/logo_horizontal_white.png)
+    background-image: url(../assets/logo_horizontal_white.png) no-repeat
   }
 
   .tab {
