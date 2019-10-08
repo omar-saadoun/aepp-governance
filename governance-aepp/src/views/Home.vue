@@ -5,7 +5,7 @@
     </div>
     <div class="fixed w-full top-0 max-w-desktop">
       <BlackHeader :show-number-input="true" @submit="showPoll" @input="handleIdInput">
-        {{activeTab}} Encuestas
+        Encuestas
       </BlackHeader>
       <div class="flex bg-gray-ae text-gray-200">
         <div v-if="pollOrdering" :class="{active: activeTab === 'hot'}" @click="switchTab('hot')" class="tab">
@@ -202,7 +202,7 @@
 
 <style scoped>
   .bg-gray-ae {
-    background-color: #333333;
+    background-color: #FE8C00;
   }
 
   .tab {
