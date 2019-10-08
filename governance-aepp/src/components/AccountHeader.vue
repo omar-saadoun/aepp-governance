@@ -5,11 +5,11 @@
          :class="{'ae-max-height-40': open}">
       <transition name="fade">
         <div class="absolute flex inset-0 justify-center items-center bg-primary z-10" v-if="showCopyNotice">
-          <span>Copied address to clipboard</span>
+          <span>Dirección copiada al portapapeles</span>
         </div>
       </transition>
       <div class="flex justify-between items-center mt-2">
-        <span><span v-if="isOwnAccount">Your </span> Account</span>
+        <span><span v-if="isOwnAccount">Su </span> Cuenta</span>
         <img src="../assets/copy.svg" class="w-4 h-4 text-white cursor-pointer" @click="copyToClipboard"/>
       </div>
       <div class="flex justify-between items-center mt-3">
@@ -31,8 +31,8 @@
 
       <div class="flex justify-between items-center my-3" v-if="delegatedPower">
         <div class="text-xs opacity-90 leading-tight flex-1">
-          Estimated delegated stake <br/>
-          Delegators votes can overwrite delegation
+          Poder delegado estimado <br/>
+          Los votos de delegados pueden sobre escribir la delegación
         </div>
         <div class="text-sm font-bold font-mono ml-auto text-right">
           {{delegatedPower | toAE}}
@@ -41,14 +41,14 @@
       </div>
       <div class="flex justify-between items-center my-3" v-else>
         <div class="text-xs opacity-90 leading-tight">
-          Could not fetch information about delegated stake.
+          No se pudo obtener el poder delegado.
         </div>
       </div>
     </div>
     <div class="bg-ae-purple text-white pl-3 pr-2 py-2 rounded-b" :class="{'rounded-t': !open, 'pr-3': !canOpen}">
       <div class="flex justify-between items-center">
         <div class="text-xs opacity-90 leading-tight font-bold">
-          Estimated voting power
+          Poder de voto estimado
         </div>
         <div class="text-sm font-bold font-mono ml-auto leading-tight mt-1" v-if="totalStake">
           {{totalStake | toAE}}

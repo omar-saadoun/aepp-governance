@@ -7,7 +7,7 @@
       <AccountHeader :address="address" :canOpen="false"/>
     </div>
     <div v-if="delegation">
-      <div class="mx-4 mt-4">Delegatee</div>
+      <div class="mx-4 mt-4">Delegado</div>
       <div class="ae-card mx-4 my-2 py-4 px-3 flex justify-between">
         <ae-identity-light
           :collapsed="true"
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div v-if="!delegation && isOwnAccount">
-      <div class="mx-4 mt-4">Delegate your voting power</div>
+      <div class="mx-4 mt-4">Delegue su voto</div>
       <div class="flex bg-white mx-4 my-2">
         <ae-input label="Delegatee" v-model="delegatee" aeddress></ae-input>
         <div class="ml-auto border-r border-gray-500 opacity-50 my-2"></div>
@@ -32,13 +32,13 @@
     </div>
     <div class="flex w-full text-center text-gray-500 mt-4 text-sm">
       <div class="flex-1 pb-2 border-b-2 border-gray-300 cursor-pointer" @click="switchTab('delegations')"
-           :class="{'active-tab': activeTab === 'delegations'}">DELEGATIONS
+           :class="{'active-tab': activeTab === 'delegations'}">DELEGACIONES
       </div>
       <div class="flex-1 pb-2 border-b-2 border-gray-300 cursor-pointer" @click="switchTab('votes')"
-           :class="{'active-tab': activeTab === 'votes'}">VOTES
+           :class="{'active-tab': activeTab === 'votes'}">VOTOS
       </div>
       <div class="flex-1 pb-2 border-b-2 border-gray-300 cursor-pointer" @click="switchTab('polls')"
-           :class="{'active-tab': activeTab === 'polls'}">POLLS
+           :class="{'active-tab': activeTab === 'polls'}">ENCUESTAS
       </div>
     </div>
     <div v-if="activeTab === 'votes'">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div v-else class="text-gray-500 text-xl text-center my-8">
-        Could not find any votes.
+        No se pudo encontrar votos.
       </div>
     </div>
     <div v-if="activeTab === 'delegations'">
@@ -63,11 +63,11 @@
             @click="$router.push(`/account/${delegator}`)"
             class="mx-4"
           />
-          <div v-if="includesIndirectDelegations" class="mx-4 mt-1 text-xs">(includes more indirect delegations)</div>
+          <div v-if="includesIndirectDelegations" class="mx-4 mt-1 text-xs">(incluye delegaciones más indirectas)</div>
         </div>
       </div>
       <div v-else class="text-gray-500 text-xl text-center my-8">
-        Could not find any delegations to you.
+        No le han delegado votos.
       </div>
     </div>
     <div v-if="activeTab === 'polls'">
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div v-else class="text-gray-500 text-xl text-center my-8">
-        Could not find any polls you created.
+        No ha creado ninguna encuesta.
       </div>
     </div>
     <BottomButtons :search-bar="true" :search-button="true" @searchSubmit="handleSearch" :key="`bottomButtons${address}`"></BottomButtons>

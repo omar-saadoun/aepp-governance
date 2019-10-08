@@ -9,14 +9,14 @@
       </BlackHeader>
       <div class="flex bg-gray-ae text-gray-200">
         <div v-if="pollOrdering" :class="{active: activeTab === 'hot'}" @click="switchTab('hot')" class="tab">
-          <span>HOT</span>
+          <span>ACTIVAS</span>
         </div>
-        <div :class="{active: activeTab === 'closing'}" @click="switchTab('closing')" class="tab"><span>CLOSING</span></div>
+        <div :class="{active: activeTab === 'closing'}" @click="switchTab('closing')" class="tab"><span>POR FINALIZAR</span></div>
         <div v-if="pollOrdering" :class="{active: activeTab === 'stake'}" @click="switchTab('stake')" class="tab">
           <span>STAKE</span>
         </div>
-        <div :class="{active: activeTab === 'new'}" @click="switchTab('new')" class="tab"><span>NEW</span></div>
-        <div :class="{active: activeTab === 'closed'}" @click="switchTab('closed')" class="tab"><span>CLOSED</span></div>
+        <div :class="{active: activeTab === 'new'}" @click="switchTab('new')" class="tab"><span>NUEVAS</span></div>
+        <div :class="{active: activeTab === 'closed'}" @click="switchTab('closed')" class="tab"><span>CERRADAS</span></div>
       </div>
     </div>
     <div class="mt-32">
@@ -29,11 +29,11 @@
       </transition>
 
       <div v-if="!polls.length && !showLoading" class="text-gray-500 text-xl text-center my-8">
-        Could not find any polls.
+        No hay encuestas.
       </div>
     </div>
     <BottomButtons v-if="showSearch" @search="filterPolls" :search-bar="true"></BottomButtons>
-    <BottomButtons v-else @cta="showPoll(pollId)" cta-text="Show Poll"></BottomButtons>
+    <BottomButtons v-else @cta="showPoll(pollId)" cta-text="Mostrar Encuesta"></BottomButtons>
     <CriticalErrorOverlay :error="error" @continue="error = null"></CriticalErrorOverlay>
   </div>
 </template>

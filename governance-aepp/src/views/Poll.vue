@@ -30,7 +30,7 @@
         </transition>
       </div>
       <div class=" mx-4 my-2 flex">
-        <span class="text-sm mr-1 text-gray-500">BY:</span>
+        <span class="text-sm mr-1 text-gray-500">POR:</span>
         <div class="text-primary">
           <ae-identity-light
             :collapsed="true"
@@ -47,23 +47,23 @@
         </div>
         <div class="absolute inset-0 flex h-full w-full justify-center items-center">
           <div class="bg-ae-gray px-2">
-            <span class="text-gray-500 opacity-75">POLL</span>
+            <span class="text-gray-500 opacity-75">ENCUESTA</span>
           </div>
         </div>
       </div>
 
       <div class="text-center w-full mt-2 text-gray-500 text-sm">
         <div class="inline-block" v-if="pollVotesState && pollVotesState.totalStake">
-          Stake: {{pollVotesState.totalStake | toAE(0)}} ({{pollVotesState.percentOfTotalSupply | formatPercent(2)}})
+          Votación: {{pollVotesState.totalStake | toAE(0)}} ({{pollVotesState.percentOfTotalSupply | formatPercent(2)}})
         </div>
         <div v-if="typeof pollState.close_height !== 'number'" class="inline-block">
           - Sin fin
         </div>
         <div v-else-if="!isClosed">
-          Finaliza en ~{{timeDifference | timeDifferenceToString}} (Block {{pollState.close_height}})
+          Finaliza en ~{{timeDifference | timeDifferenceToString}} (Bloque {{pollState.close_height}})
         </div>
         <div v-else-if="isClosed && closeBlock">
-          Finalizada en {{closeBlock.keyBlock.time | timeStampToString}} (Block {{pollState.close_height}})
+          Finalizada en {{closeBlock.keyBlock.time | timeStampToString}} (Bloque {{pollState.close_height}})
         </div>
         <div v-else-if="isClosed && !closeBlock">
           Finaliza en el bloque {{pollState.close_height}}

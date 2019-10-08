@@ -6,11 +6,11 @@
       <span class="text-2xl leading-none break-words max-w-85">{{data.title}}</span>
     </div>
     <div class="text-gray-500 text-sm">
-      <span v-if="percentOfTotalSupply">{{percentOfTotalSupply | formatPercent(2)}} stake - </span>
-      <span v-else-if="loading"><ae-loader></ae-loader> stake - </span>
-      <span v-if="isClosed">closed at {{data.close_height}} (~{{Math.abs(timeDifference) | timeDifferenceToString}} ago)</span>
-      <span v-else-if="typeof data.close_height !== 'number'">never closes</span>
-      <span v-else>closes in {{timeDifference | timeDifferenceToString}}</span>
+      <span v-if="percentOfTotalSupply">{{percentOfTotalSupply | formatPercent(2)}} poder - </span>
+      <span v-else-if="loading"><ae-loader></ae-loader> poder - </span>
+      <span v-if="isClosed">finaliza en {{data.close_height}} (hace ~{{Math.abs(timeDifference) | timeDifferenceToString}})</span>
+      <span v-else-if="typeof data.close_height !== 'number'">nunca cierra</span>
+      <span v-else>cierra en {{timeDifference | timeDifferenceToString}}</span>
     </div>
   </div>
 </template>
