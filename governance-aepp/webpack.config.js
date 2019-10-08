@@ -78,7 +78,7 @@ module.exports = env => {
       new CleanWebpackPlugin(),
       new VueLoaderPlugin(),
       new FaviconsWebpackPlugin({
-        logo: path.resolve(__dirname, 'src/assets/favicon.ico'),
+        logo: path.resolve(__dirname, 'src/assets/favicon.svg'),
         mode: 'webapp', // optional can be 'webapp' or 'light' - 'webapp' by default
         devMode: 'webapp', // optional can be 'webapp' or 'light' - 'light' by default
         favicons: {
