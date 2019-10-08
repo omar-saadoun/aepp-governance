@@ -249,7 +249,7 @@
   }
 
   .active-tab {
-    border-color: #FF0D6A;
+    border-color: #FE8C00;
     color: black;
   }
 

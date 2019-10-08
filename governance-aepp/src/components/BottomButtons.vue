@@ -141,7 +141,7 @@
 
   .search-button::after {
     content: "";
-    border: 10px solid #FF0D6A;
+    border: 10px solid #FE8C00;
     transform: rotate(45deg);
     position: absolute;
     top: -10px;
