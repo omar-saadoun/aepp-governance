@@ -66,7 +66,7 @@
 
   .hide-input {
     width: auto;
-    background: #333;
+    background: #FE8C00;
     padding-right: 0;
   }
 
