@@ -25,11 +25,11 @@
       </ul>
     </div>
     <div class="py-2 px-4">
-      <ae-input :error="!!errors.titleError" v-model="createMetadata.title" label="Title">
+      <ae-input :error="!!errors.titleError" v-model="createMetadata.title" label="Título">
       </ae-input>
     </div>
     <div class="py-2 px-4">
-      <ae-input :error="!!errors.descriptionError" v-model="createMetadata.description" label="Description">
+      <ae-input :error="!!errors.descriptionError" v-model="createMetadata.description" label="Descripción">
       </ae-input>
     </div>
     <div class="mt-2">
@@ -57,7 +57,7 @@
         <div v-if="option.text" class="rounded-full border-2 border-gray-500 w-6 h-6">&nbsp;</div>
         <div v-else class="text-3xl text-gray-300 text-right font-bold">&plus;</div>
       </div>
-      <input v-model="option.text" @input="optionInput" type="text" placeholder="Add Option"
+      <input v-model="option.text" @input="optionInput" type="text" placeholder="Agregar Opción"
              class="ae-input-option w-full h-full px-2 py-6 outline-none"
              :class="{'bg-ae-error': !!errors.optionError}"/>
       <div v-if="option.text">
@@ -67,12 +67,12 @@
 
     <div class="py-2 px-4 mb-16">
       <ae-input :error="!!errors.closeHeightError" type="number" v-model="closeHeight" @input="updateDateInputs"
-                label="Close at height">
+                label="Cierra en el bloque">
       </ae-input>
       <div class="mt-4 flex">
-        <ae-input type="date" class="mr-2" label="Est. close date" v-model="dateString"
+        <ae-input type="date" class="mr-2" label="Cierre estimado en" v-model="dateString"
                   @input="updateCloseHeight"></ae-input>
-        <ae-input type="time" label="Est. close time" v-model="timeString" @input="updateCloseHeight"></ae-input>
+        <ae-input type="time" label="Hora est. cierre" v-model="timeString" @input="updateCloseHeight"></ae-input>
       </div>
       <div class="text-gray-500 text-sm p-2">
         <span v-if="closeHeight && closeHeight > height">
@@ -86,7 +86,7 @@
         </span>
       </div>
     </div>
-    <BottomButtons cta-text="Create Poll" @cta="createPoll"></BottomButtons>
+    <BottomButtons cta-text="Crear Encuesta" @cta="createPoll"></BottomButtons>
     <CriticalErrorOverlay :error="criticalError" @continue="criticalError = null"></CriticalErrorOverlay>
   </div>
 </template>
