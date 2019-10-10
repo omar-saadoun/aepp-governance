@@ -165,9 +165,17 @@ describe('Governance Contracts', () => {
         assert.equal(eventArgument(vote, 2), 2);
         assert.equal(vote.result.returnType, 'ok');
 
-        let pollState = await pollContract.methods.get_state();
-        assert.deepEqual(pollState.decodedResult.votes, [[ownerKeypair.publicKey, 2]]);
+         
     });
+    it('Revoke Vote', async () => {
+        let revokeVote = await pollContract.methods.revoke_vote();
+        assert.equal(topicHashFromResult(revokeVote), hashTopic('RevokeVote'));
+        assert.equal(encodeEventAddress(revokeVote, 0, "ct_"), pollContract.deployInfo.address);
+        assert.equal(encodeEventAddress(revokeVote, 1, "ak_"), ownerKeypair.publicKey);
+        assert.equal(revokeVote.result.returnType, 'ok');
+
+    });
+    
     it('Add Voter ThirdClient', async () => {
        // pollContract = await ownerClient.getContractInstance(pollSource, {contractAddress: pollContract.deployInfo.address});
         
@@ -187,8 +195,7 @@ describe('Governance Contracts', () => {
         assert.equal(eventArgument(vote, 2), 2);
         assert.equal(vote.result.returnType, 'ok');
 
-        let pollState = await pollContract.methods.get_state();
-        assert.deepEqual(pollState.decodedResult.votes, [[thirdKeypair.publicKey, 2]]);
+    
     });
     
     it('Add Vote by non voter; Failing, voter not authorized', async () => {
@@ -228,16 +235,7 @@ describe('Governance Contracts', () => {
         assert.include(voteError.decodedError, 'POLL_ALREADY_CLOSED');
     });
 
-    it('Revoke Vote', async () => {
-        let revokeVote = await pollContract.methods.revoke_vote();
-        assert.equal(topicHashFromResult(revokeVote), hashTopic('RevokeVote'));
-        assert.equal(encodeEventAddress(revokeVote, 0, "ct_"), pollContract.deployInfo.address);
-        assert.equal(encodeEventAddress(revokeVote, 1, "ak_"), ownerKeypair.publicKey);
-        assert.equal(revokeVote.result.returnType, 'ok');
-
-        let pollState = await pollContract.methods.get_state();
-        assert.deepEqual(pollState.decodedResult.votes, []);
-    });
+   
 
     it('Add Vote; Failing, option not known', async () => {
         pollContract = await ownerClient.getContractInstance(pollSource, {contractAddress: pollContract.deployInfo.address});
