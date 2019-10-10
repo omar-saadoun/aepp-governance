@@ -85,7 +85,7 @@ describe('Governance Contracts', () => {
             spec_ref: Promise.resolve("d4f02eaafd1a9e9de7d10972ca8e47fa7a985825c3c9c1e249c72683cb3e4f19")
         };
 
-        const init1 = await pollContract.methods.init(metadata1, vote_options, close_height).catch(e => e);
+        const init1 = await pollContract.methods.init(metadata1, vote_options, close_height,registryContract.deployInfo.address).catch(e => e);
         assert.include(init1.decodedError, 'TITLE_STRING_TO_LONG');
 
         const metadata2 = {
@@ -95,7 +95,7 @@ describe('Governance Contracts', () => {
             spec_ref: Promise.resolve("d4f02eaafd1a9e9de7d10972ca8e47fa7a985825c3c9c1e249c72683cb3e4f19")
         };
 
-        const init2 = await pollContract.methods.init(metadata2, vote_options, close_height).catch(e => e);
+        const init2 = await pollContract.methods.init(metadata2, vote_options, close_height,registryContract.deployInfo.address).catch(e => e);
         assert.include(init2.decodedError, 'DESCRIPTION_STRING_TO_LONG');
 
 
@@ -106,7 +106,7 @@ describe('Governance Contracts', () => {
             spec_ref: Promise.resolve("d4f02eaafd1a9e9de7d10972ca8e47fa7a985825c3c9c1e249c72683cb3e4f19")
         };
 
-        const init = await pollContract.methods.init(metadata, vote_options, close_height);
+        const init = await pollContract.methods.init(metadata, vote_options, close_height,registryContract.deployInfo.address);
         assert.equal(init.result.returnType, 'ok');
 
         let addPoll = await registryContract.methods.add_poll(init.address, true);

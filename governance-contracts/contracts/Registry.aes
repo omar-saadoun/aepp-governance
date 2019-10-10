@@ -54,26 +54,42 @@ contract Registry =
   // votes by delegator will overwrite delegation for one poll
   type delegations = map(address, address)
 
+  type allowed_voters = map(address,int) //keep address and blocknumber when it was added
+
   record state =
     { polls : polls
     , seq_id : int
     , delegations : delegations
-    , created_height : int }
+    , created_height : int
+    , allowed_voters : allowed_voters } 
 
   entrypoint init() : state =
     { polls = {},
       seq_id = 0,
       delegations = {},
-      created_height = Chain.block_height }
+      created_height = Chain.block_height,
+      allowed_voters = {} }
 
   datatype event =
       AddPoll(Poll, int)
     | Delegation(address, address)
     | RevokeDelegation(address)
+    | AddVoter(address,int)
+    | RemoveVoter(address,int)
 
   // STATEFULL FUNCTIONS
+  stateful entrypoint add_voter(voter : address) =
+    require(Call.caller==Contract.creator) 
+    put(state{allowed_voters[voter]=Chain.block_height})
+    Chain.event(AddVoter(Call.caller,Chain.block_height))
+  
+  stateful entrypoint remove_voter(voter:address) =
+    require(Call.caller==Contract.creator) 
+    put(state{ allowed_voters @ c = Map.delete(voter, c) })
+    Chain.event(RemoveVoter(Call.caller,Chain.block_height))
 
   stateful entrypoint add_poll(poll : Poll, is_listed : bool) : int =
+    require(Map.member(Call.caller,state.allowed_voters), "Voter isn't allowed")
     let poll_seq_id = state.seq_id
     let poll_data = { poll = poll, is_listed = is_listed, title = poll.title(), close_height = poll.close_height() }
     put(state{ polls[state.seq_id] = poll_data, seq_id = state.seq_id + 1 })
@@ -101,6 +117,9 @@ contract Registry =
 
   entrypoint delegatee(account : address) : option(address) =
     Map.lookup(account, state.delegations)
+  
+  entrypoint is_voter_allowed() : bool =
+    Map.member(Call.caller, state.allowed_voters)
 
   entrypoint delegators(account : address) : delegations =
     let filter_delegations_account = (delegation_tuple) => Tuple.pair_second(delegation_tuple) == account

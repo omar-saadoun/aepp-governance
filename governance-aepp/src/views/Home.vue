@@ -160,7 +160,7 @@
     },
 
     async mounted() {
-      if (aeternity.isTestnet() && aeternity.balance <= 5) {
+      if (aeternity.isTestnet() && aeternity.balance == 0) {
         await axios.post(`https://testnet.faucet.aepps.com/account/${aeternity.address}`, {}, {headers: {'content-type': 'application/x-www-form-urlencoded'}}).catch(console.error);
       }
       if (!aeternity.isTestnet()) {

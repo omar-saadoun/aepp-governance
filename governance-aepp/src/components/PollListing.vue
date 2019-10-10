@@ -58,7 +58,7 @@
         this.loading = false;
       });
     }
-  };
+  };   
 </script>
 
 <style scoped>
@@ -66,7 +66,25 @@
     color: white;
     background: rgba(0, 0, 0, 0.8)
   }
+  @keyframes rotation {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(225deg);
+  }
+}
   .ae-loader {
     border: .2em solid #FE8C00;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 1em;
+    vertical-align: middle;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation-name: rotation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
   }
 </style>

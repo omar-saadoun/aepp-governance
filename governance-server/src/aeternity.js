@@ -106,7 +106,7 @@ module.exports = class Aeternity {
         const height = await this.height();
         const closingHeightOrUndefined = await this.getClosingHeightOrUndefined(pollCloseHeight);
         const closingHeightOrCurrentHeight = closingHeightOrUndefined ? closingHeightOrUndefined : height;
-
+//aca me puedo fijar el tamaño del mapa de votantes, pero tiene que ser en el mismo bloque en que fue cerrada la poll
         return this.cache.getOrSet(["totalSupply", (closingHeightOrCurrentHeight / 1000).toFixed()], async () => {
             const result = await axios.get(`${process.env.NODE_URL || this.verifyConstants.nodeUrl}v2/debug/token-supply/height/${closingHeightOrCurrentHeight}`);
             return new BigNumber(result.data.total).toFixed();
