@@ -18,7 +18,7 @@
 // THIS IS NOT SECURITY AUDITED
 // DO NEVER USE THIS WITHOUT SECURITY AUDIT FIRST
 contract Registry =
-  entrypoint is_voter_allowed : () => bool
+  entrypoint is_voter_allowed : address => bool
 
 contract Poll =
 
@@ -45,7 +45,7 @@ contract Poll =
       Vote(address, address, int)
     | RevokeVote(address, address)
 
-  entrypoint init(metadata : metadata, vote_options : vote_option, close_height : option(int), registryContract: Registry) : state =
+  entrypoint init(metadata : metadata, vote_options : vote_option, close_height : option(int), registryContract : Registry) : state =
     require(String.length(metadata.title) =< 50, "TITLE_STRING_TO_LONG")
     require(String.length(metadata.description) =< 300, "DESCRIPTION_STRING_TO_LONG")
     { metadata = metadata,
@@ -59,7 +59,7 @@ contract Poll =
   // STATEFULL FUNCTIONS
 
   stateful entrypoint vote(option : int) =
-    require(state.registry.is_voter_allowed(),"You are not allowed to add a voter")
+    require(state.registry.is_voter_allowed(Call.caller),"VOTER_NOT_AUTHORIZED")
     require(!is_closed(), "POLL_ALREADY_CLOSED")
     require(Map.member(option, state.vote_options), "VOTE_OPTION_NOT_KNOWN")
     put(state{ votes[Call.caller] = option})

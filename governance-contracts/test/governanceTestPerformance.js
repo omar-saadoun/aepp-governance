@@ -78,7 +78,7 @@ describe.skip('Governance Contracts Performance', () => {
             const vote_options = {0: "Yes, test more", 1: "No, test less", 2: "Who cares?"};
             const close_height = Math.round(Math.random()) ? Promise.reject() : Promise.resolve(height + Math.floor(Math.random() * 1000));
 
-            const init = await pollContract.methods.init(metadata, vote_options, close_height);
+            const init = await pollContract.methods.init(metadata, vote_options, close_height,registryContract.deployInfo.address);
             assert.equal(init.result.returnType, 'ok');
 
             const contract = await client.getContractInstance(registrySource, {contractAddress: registryContract.deployInfo.address});
@@ -127,7 +127,7 @@ describe.skip('Governance Contracts Performance', () => {
         const vote_options = {0: "Yes, test more", 1: "No, test less", 2: "Who cares?", 3: "WHAT", 4: "Maybe?!"};
         const close_height = Promise.reject();
 
-        const init = await pollContract.methods.init(metadata, vote_options, close_height);
+        const init = await pollContract.methods.init(metadata, vote_options, close_height,registryContract.deployInfo.address);
         await registryContract.methods.add_poll(init.address, true);
 
         await additional_wallets.reduce(async (promiseAcc, wallet) => {

@@ -68,7 +68,7 @@ contract Registry =
       seq_id = 0,
       delegations = {},
       created_height = Chain.block_height,
-      allowed_voters = {} }
+      allowed_voters = {[Call.caller]=Chain.block_height}}
 
   datatype event =
       AddPoll(Poll, int)
@@ -81,15 +81,15 @@ contract Registry =
   stateful entrypoint add_voter(voter : address) =
     require(Call.caller==Contract.creator,"You are not allowed to add a voter") 
     put(state{allowed_voters[voter]=Chain.block_height})
-    Chain.event(AddVoter(Call.caller,Chain.block_height))
+    Chain.event(AddVoter(voter,Chain.block_height))
   
   stateful entrypoint remove_voter(voter:address) =
     require(Call.caller==Contract.creator,"You are not allowed to add a voter") 
     put(state{ allowed_voters @ c = Map.delete(voter, c) })
-    Chain.event(RemoveVoter(Call.caller,Chain.block_height))
+    Chain.event(RemoveVoter(voter,Chain.block_height))
 
   stateful entrypoint add_poll(poll : Poll, is_listed : bool) : int =
-    require(Map.member(Call.caller,state.allowed_voters), "Voter isn't allowed")
+    require(is_voter_allowed(Call.caller), "Voter isn't allowed")
     let poll_seq_id = state.seq_id
     let poll_data = { poll = poll, is_listed = is_listed, title = poll.title(), close_height = poll.close_height() }
     put(state{ polls[state.seq_id] = poll_data, seq_id = state.seq_id + 1 })
@@ -113,13 +113,15 @@ contract Registry =
 
   entrypoint polls() : polls = state.polls
 
+  entrypoint voters() : allowed_voters = state.allowed_voters
+
   entrypoint poll(poll_id) : poll_data = require_poll_by_id(poll_id)
 
   entrypoint delegatee(account : address) : option(address) =
     Map.lookup(account, state.delegations)
   
-  entrypoint is_voter_allowed() : bool =
-    Map.member(Call.caller, state.allowed_voters)
+  entrypoint is_voter_allowed(voter : address) : bool =
+    Map.member(voter, state.allowed_voters)
 
   entrypoint delegators(account : address) : delegations =
     let filter_delegations_account = (delegation_tuple) => Tuple.pair_second(delegation_tuple) == account

@@ -35,7 +35,7 @@ const config = {
 
 describe('Governance Contracts', () => {
 
-    let ownerKeypair, ownerClient, secondKeypair, secondClient, thirdKeypair;
+    let ownerKeypair, ownerClient, secondKeypair, secondClient, thirdKeypair, thirdClient;
     let registryContract, pollContract;
 
     before(async () => {
@@ -55,6 +55,14 @@ describe('Governance Contracts', () => {
             url: config.host,
             internalUrl: config.internalHost,
             keypair: secondKeypair,
+            nativeMode: true,
+            networkId: 'ae_devnet',
+            compilerUrl: config.compilerUrl
+        });
+        thirdClient = await Universal({
+            url: config.host,
+            internalUrl: config.internalHost,
+            keypair: thirdKeypair,
             nativeMode: true,
             networkId: 'ae_devnet',
             compilerUrl: config.compilerUrl
@@ -148,7 +156,6 @@ describe('Governance Contracts', () => {
         let votes = await pollContract.methods.votes();
         assert.deepEqual(votes.decodedResult, []);
     });
-
     it('Add Vote', async () => {
         pollContract = await ownerClient.getContractInstance(pollSource, {contractAddress: pollContract.deployInfo.address});
         let vote = await pollContract.methods.vote(2);
@@ -159,11 +166,51 @@ describe('Governance Contracts', () => {
         assert.equal(vote.result.returnType, 'ok');
 
         let pollState = await pollContract.methods.get_state();
-        assert.deepEqual(pollState.decodedResult.votes, [['ak_fUq2NesPXcYZ1CcqBcGC3StpdnQw3iVxMA3YSeCNAwfN4myQk', 2]]);
+        assert.deepEqual(pollState.decodedResult.votes, [[ownerKeypair.publicKey, 2]]);
     });
+    it('Add Voter ThirdClient', async () => {
+       // pollContract = await ownerClient.getContractInstance(pollSource, {contractAddress: pollContract.deployInfo.address});
+        
+        let voter = await registryContract.methods.add_voter(thirdKeypair.publicKey);
+        const close_height = Promise.resolve(await thirdClient.height());
+        assert.equal(topicHashFromResult(voter), hashTopic('AddVoter'));
+        assert.equal(encodeEventAddress(voter, 0, "ak_"), thirdKeypair.publicKey);
+       // assert.equal(eventArgument(voter, 2), close_height);
+        assert.equal(voter.result.returnType, 'ok');
+    });
+    it('Add Vote by ThirdClient', async () => {
+        pollContract = await thirdClient.getContractInstance(pollSource, {contractAddress: pollContract.deployInfo.address});
+        let vote = await pollContract.methods.vote(2);
+        assert.equal(topicHashFromResult(vote), hashTopic('Vote'));
+        assert.equal(encodeEventAddress(vote, 0, "ct_"), pollContract.deployInfo.address);
+        assert.equal(encodeEventAddress(vote, 1, "ak_"), thirdKeypair.publicKey);
+        assert.equal(eventArgument(vote, 2), 2);
+        assert.equal(vote.result.returnType, 'ok');
 
-    it('Add Vote; Failing, poll already closed', async () => {
+        let pollState = await pollContract.methods.get_state();
+        assert.deepEqual(pollState.decodedResult.votes, [[thirdKeypair.publicKey, 2]]);
+    });
+    
+    it('Add Vote by non voter; Failing, voter not authorized', async () => {
         const otherPollContract = await secondClient.getContractInstance(pollSource);
+
+        const metadata = {
+            title: "Testing",
+            description: "This Poll is created for Testing purposes only",
+            link: "https://aeternity.com/",
+            spec_ref: Promise.resolve("d4f02eaafd1a9e9de7d10972ca8e47fa7a985825c3c9c1e249c72683cb3e4f19")
+        };
+        const vote_options = {0: "Only Option"};
+        const close_height = Promise.resolve(await secondClient.height());
+
+        const init = await otherPollContract.methods.init(metadata, vote_options, close_height,registryContract.deployInfo.address);
+        assert.equal(init.result.returnType, 'ok');
+
+        let voteError = await otherPollContract.methods.vote(0).catch(e => e);
+        assert.include(voteError.decodedError, 'VOTER_NOT_AUTHORIZED');
+    });
+    it('Add Vote; Failing, poll already closed', async () => {
+        const otherPollContract = await ownerClient.getContractInstance(pollSource);
 
         const metadata = {
             title: "Testing",
@@ -174,7 +221,7 @@ describe('Governance Contracts', () => {
         const vote_options = {0: "Only Option"};
         const close_height = Promise.resolve(await ownerClient.height());
 
-        const init = await otherPollContract.methods.init(metadata, vote_options, close_height);
+        const init = await otherPollContract.methods.init(metadata, vote_options, close_height,registryContract.deployInfo.address);
         assert.equal(init.result.returnType, 'ok');
 
         let voteError = await otherPollContract.methods.vote(0).catch(e => e);
