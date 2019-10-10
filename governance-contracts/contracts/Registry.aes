@@ -79,12 +79,12 @@ contract Registry =
 
   // STATEFULL FUNCTIONS
   stateful entrypoint add_voter(voter : address) =
-    require(Call.caller==Contract.creator) 
+    require(Call.caller==Contract.creator,"You are not allowed to add a voter") 
     put(state{allowed_voters[voter]=Chain.block_height})
     Chain.event(AddVoter(Call.caller,Chain.block_height))
   
   stateful entrypoint remove_voter(voter:address) =
-    require(Call.caller==Contract.creator) 
+    require(Call.caller==Contract.creator,"You are not allowed to add a voter") 
     put(state{ allowed_voters @ c = Map.delete(voter, c) })
     Chain.event(RemoveVoter(Call.caller,Chain.block_height))
 

@@ -39,13 +39,13 @@ contract Poll =
     , create_height : int
     , votes : votes
     , author : address
-    , registry:Registry }
+    , registry : Registry }
 
   datatype event =
       Vote(address, address, int)
     | RevokeVote(address, address)
 
-  entrypoint init(metadata : metadata, vote_options : vote_option, close_height : option(int), registry: Registry) : state =
+  entrypoint init(metadata : metadata, vote_options : vote_option, close_height : option(int), registryContract: Registry) : state =
     require(String.length(metadata.title) =< 50, "TITLE_STRING_TO_LONG")
     require(String.length(metadata.description) =< 300, "DESCRIPTION_STRING_TO_LONG")
     { metadata = metadata,
@@ -54,12 +54,12 @@ contract Poll =
       create_height = Chain.block_height,
       votes = {},
       author = Call.caller,
-      registry=registry }
+      registry=registryContract }
 
   // STATEFULL FUNCTIONS
 
   stateful entrypoint vote(option : int) =
-    require(registry.is_voter_allowed())
+    require(state.registry.is_voter_allowed(),"You are not allowed to add a voter")
     require(!is_closed(), "POLL_ALREADY_CLOSED")
     require(Map.member(option, state.vote_options), "VOTE_OPTION_NOT_KNOWN")
     put(state{ votes[Call.caller] = option})
