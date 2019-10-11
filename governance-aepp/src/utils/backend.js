@@ -4,7 +4,7 @@ const backend = {};
 
 //const BACKEND_URL = 'http://localhost:3000';
 //const BACKEND_URL = 'http://ec2-35-173-239-151.compute-1.amazonaws.com:3000'
-const BACKEND_URL = 'https://server.governance.aeternity.art';
+const BACKEND_URL = 'http://ec2-3-84-170-40.compute-1.amazonaws.com:3000';
 
 const wrapTry = async (f) => {
   try {
