@@ -9,8 +9,8 @@ const aeternity = {
   height: null,
   networkId: null,
   passive: false,
-  nodeURL: 'http://ec2-3-84-170-40.compute-1.amazonaws.com:3013', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
-  compilerURL: 'http://ec2-3-84-170-40.compute-1.amazonaws.com:3080', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
+  nodeURL: 'http://nodo.inmind.space', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
+  compilerURL: 'http://compiler.inmind.space', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
   contractAddress: 'ct_2Gszmrx2yXivgLy6znktwp2uZHzFE8MSGLtWDyPrdZXss8KSuJ'
 };
 
