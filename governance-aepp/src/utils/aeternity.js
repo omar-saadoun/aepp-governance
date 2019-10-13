@@ -10,7 +10,7 @@ const aeternity = {
   networkId: null,
   passive: false,
   nodeURL: 'https://testnet.aeternity.art', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
-  compilerURL: 'https://compiler.aepps.com', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
+  compilerURL: 'https://compiler.inmind.space', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
   contractAddress: 'ct_2Gszmrx2yXivgLy6znktwp2uZHzFE8MSGLtWDyPrdZXss8KSuJ'
 };
 
