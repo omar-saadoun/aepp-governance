@@ -2,33 +2,14 @@ version: "3.6"
 
 services:
 
-  server:
-    image: aeternity/governance-server
-    restart: unless-stopped
-    ports:
-      - 3000:3000
-    links:
-      - aeternity_proxy
-      - redis
-      - middleware
-      - compiler
-    environment:
-      - CONTRACT_ADDRESS=ct_2cFxfeheJGfy4cwBWmeJ2wiiRM9BvJh6cCevdsoGv2VNascjsc
-      - NODE_URL=http://aeternity_proxy:3013/
-      - COMPILER_URL=http://compiler:3080
-      - WEBSOCKET_URL=ws://middleware:3020
-      - MIDDLEWARE_URL=http://middleware:8000
-      - REDIS_URL=redis://redis:6379
-
   aeternity:
-    image: aeternity/aeternity:v4.2.0
+    image: aeternity/aeternity:v4.2.1
     restart: unless-stopped
     hostname: aeternity
     volumes:
       - ./aeternity.yaml:/home/aeternity/.aeternity/aeternity/aeternity.yaml
       - aeternity_data:/home/aeternity/node/data/mnesia
-    ports:
-      - 3013:3013
+    
       
   compiler:
     image: aeternity/aesophia_http:v3.2.0
@@ -41,6 +22,8 @@ services:
     image: nginx:1.13.8
     restart: unless-stopped
     hostname: aeternity_proxy
+    ports:
+      - 3013:3013
     links:
       - aeternity
     volumes:
