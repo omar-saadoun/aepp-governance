@@ -94,5 +94,13 @@ app.get('/pollOrdering', errorHandler(async (req, res) => {
     if (new Date().getTime() - start > 10) console.log("\nrequest pollOrdering", new Date().getTime() - start, "ms");
     res.json(data)
 }));
+app.get('/hello', errorHandler(async (req, res) => {
+    console.log("\nrequest hello", new Date().getTime(), "ms");
+    res.json('Hello')
+}));
+app.get('/envs', errorHandler(async (req, res) => {
+    console.log("\nrequest hello" + process.env.NODE_URL + process.env.CONTRACT_ADDRESS, new Date().getTime(), "ms");
+    res.json('Hello')
+}));
 
 init();
