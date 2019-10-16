@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aeternity/aepp-sdk": "4.7.0",
+    "@aeternity/aepp-cli": "^2.6.0",
+    "@aeternity/aepp-sdk": "git+https://github.com/aeternity/aepp-sdk-js.git#develop",
     "blake2b": "^2.1.3",
     "bn.js": "^5.0.0",
     "forgae-lib": "2.0.0",

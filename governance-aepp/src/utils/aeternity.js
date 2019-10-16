@@ -37,7 +37,7 @@ aeternity.initProvider = async () => {
 
     aeternity.height = await aeternity.client.height();
     aeternity.networkId = (await aeternity.client.getNodeInfo()).nodeNetworkId;
-    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress});
+    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress},[options.backend='aevm']);
     return true;
   } catch (e) {
     console.error(e);
