@@ -249,7 +249,7 @@
         }
         const poll = await aeternity.contract.methods.poll(this.pollId);
         this.pollAddress = poll.decodedResult.poll;
-        this.pollContract = await aeternity.client.getContractInstance(pollContractSource, {contractAddress: this.pollAddress});
+        this.pollContract = await aeternity.client.getContractInstance(pollContractSource, {contractAddress: this.pollAddress, opt:{backend:'aevm'}});
         this.pollState = (await this.pollContract.methods.get_state()).decodedResult;
         this.isClosed = this.pollState.close_height <= parseInt(await aeternity.client.height());
         try {

@@ -34,10 +34,11 @@ aeternity.initProvider = async () => {
     } catch (e) {
       aeternity.passive = true;
     }
-
+    console.warn('gets there1');
     aeternity.height = await aeternity.client.height();
     aeternity.networkId = (await aeternity.client.getNodeInfo()).nodeNetworkId;
-    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress},[options.backend='aevm']);
+    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress, opt:{backend:'aevm'}});
+    console.warn('gets there2');
     return true;
   } catch (e) {
     console.error(e);
