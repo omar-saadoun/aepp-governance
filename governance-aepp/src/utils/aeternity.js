@@ -11,7 +11,7 @@ const aeternity = {
   passive: false,
   nodeURL: 'https://nodo.inmind.space', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
   compilerURL: 'https://compiler.inmind.space', // THIS IS FOR THE STATIC CLIENT WITHOUT WALLET
-  contractAddress: 'ct_2Gszmrx2yXivgLy6znktwp2uZHzFE8MSGLtWDyPrdZXss8KSuJ'
+  contractAddress: 'ct_27iweB4GCJvuuLXJxWFjq3CjnE2C1j4hsd5SGE8ZR1v6sd9Rd9'
 };
 
 const timeout = async (promise) => {
@@ -37,7 +37,7 @@ aeternity.initProvider = async () => {
     console.warn('gets there1');
     aeternity.height = await aeternity.client.height();
     aeternity.networkId = (await aeternity.client.getNodeInfo()).nodeNetworkId;
-    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress, opt:{backend:'aevm'}});
+    aeternity.contract = await aeternity.client.getContractInstance(registryContractSource, {contractAddress: aeternity.contractAddress});
     console.warn('gets there2');
     return true;
   } catch (e) {
