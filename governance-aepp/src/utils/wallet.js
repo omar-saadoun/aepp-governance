@@ -3,9 +3,9 @@ import Detector from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wal
 import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message'
 
 // Send wallet connection info to Aepp through content script
-const NODE_URL = 'https://sdk-testnet.aepps.com/'
-const NODE_INTERNAL_URL = 'https://sdk-testnet.aepps.com/'
-const COMPILER_URL = 'https://compiler.aepps.com'
+const NODE_URL = 'https://nodo.inmind.space'
+const NODE_INTERNAL_URL = 'https://nodo.inmind.space'
+const COMPILER_URL = 'https://compiler.inmind.space'
 
 export const wallet = {
   client: null,
