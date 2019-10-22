@@ -118,9 +118,7 @@
           title: "",
           description: "",
           link: "",
-          // Sophia Type some(<T>) expects a promise. Since spec_ref is not set yet we deliver a rejected promise
-          spec_ref: new Promise((_, reject) => reject()).catch(() => {
-          })
+          spec_ref: undefined //updated to FATE
         },
         is_listed: true,
         optionsString: "",
@@ -208,9 +206,7 @@
         if (this.createMetadata.title.length >= 3 && this.options.length >= 3) {
           this.showLoading = true;
           const close_height = parseInt(this.closeHeight) === 0
-            ? new Promise((_, reject) => reject()).catch(() => {
-            })
-            : Promise.resolve(parseInt(this.closeHeight));
+            ? undefined : parseInt(this.closeHeight);
 
           let newID = 0;
           options = this.options.filter(option => !!option.text)
@@ -220,9 +216,16 @@
             }).reduce((acc, option) => Object.assign(acc, {[option.id]: option.text}), {});
 
           try {
+            console.warn('start');
             const pollContract = await aeternity.client.getContractInstance(pollContractSource);
-            const init = await pollContract.methods.init(this.createMetadata, options, close_height);
+            console.warn('Poll get contract instance');
+            console.debug(this.createMetadata);
+            console.debug(this.options);
+            console.debug(this.close_height);
+            const init = await pollContract.methods.init(this.createMetadata, options, 175000);
+            console.warn('Poll init done');
             const addPoll = await aeternity.contract.methods.add_poll(init.address, this.is_listed);
+            console.warn('Poll added to registry');
             this.$router.push(`/poll/${addPoll.decodedResult}`);
           } catch (e) {
             this.showLoading = false;
